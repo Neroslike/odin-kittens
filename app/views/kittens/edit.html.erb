@@ -1,0 +1,6 @@
+<h1>Edit kitten</h1>
+<p><%= link_to 'Back', kitten_path(@kitten) %></p>
+
+<%= render 'kitten_form', kitten: @kitten %>
+
+<%= link_to 'Delete this kitten', kitten_path(@kitten), data: { turbo_method: :delete, turbo_confirm: "Are you sure?"} %>

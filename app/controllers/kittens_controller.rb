@@ -1,10 +1,20 @@
 class KittensController < ApplicationController
   def index
     @kittens = Kitten.all
+    respond_to do |format|
+      format.html
+      format.xml  { render xml: @kittens }
+      format.json { render json: @kittens }
+    end
   end
 
   def show
     @kitten = Kitten.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.xml  { render xml: @kitten }
+      format.json { render json: @kitten }
+    end
   end
 
   def new
@@ -15,9 +25,9 @@ class KittensController < ApplicationController
     @kitten = Kitten.new(kitten_params)
 
     if @kitten.save
-      redirect_to @kitten
+      redirect_to @kitten, notice: "Kitten created succesfully!!"
     else
-      render :new, status: :unprocessable_entity
+      redirect_to new_kitten_path, alert: 'Haha you did something wrong in the form', status: :unprocessable_entity
     end
   end
 
@@ -29,9 +39,9 @@ class KittensController < ApplicationController
     @kitten = Kitten.find(params[:id])
 
     if @kitten.update(kitten_params)
-      redirect_to @kitten
+      redirect_to @kitten, notice: "Kitten updated succesfully!!"
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_entity, alert: 'Haha you did something wrong in the form'
     end
   end
 
